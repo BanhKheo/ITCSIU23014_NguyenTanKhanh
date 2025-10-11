@@ -1,0 +1,174 @@
+/* --- GLOBAL STYLES & TYPOGRAPHY --- */
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #f7f7f7;
+    color: #444;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- HEADER --- */
+.profile-header {
+    position: relative;
+}
+.profile-header__background {
+    width: 100%;
+    height: 350px;
+    display: block;
+    object-fit: cover;
+}
+.profile-header__avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid white;
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    transform: translateY(50%);
+}
+
+/* --- INTRO --- */
+.profile-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 100px;
+    padding-bottom: 40px;
+    text-align: center;
+}
+.profile-intro__name {
+    font-size: 30px;
+    font-weight: bold;
+    color: #e67e22;
+    margin-right: 1050px;
+
+}
+/* You would add your contact list styles here */
+.profile-intro__contact-list {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+/* --- RESUME LAYOUT --- */
+.resume {
+    max-width: 900px;
+    margin: 40px auto;
+    background-color: white;
+    padding: 40px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+    display: flex;
+    gap: 40px;
+}
+.resume__sidebar {
+    flex: 1;
+}
+.resume__main-content {
+    flex: 2;
+}
+
+/* --- GENERAL SECTION STYLING --- */
+.resume__section {
+    margin-bottom: 30px;
+}
+.section__title {
+    color: #e67e22;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+/* --- PROFILE SECTION --- */
+.profile__list {
+    list-style: none;
+    padding: 0;
+}
+.profile__item {
+    margin-bottom: 8px;
+}
+
+/* --- EDUCATION SECTION --- */
+.education__entry {
+    margin-bottom: 20px;
+    padding-left: 25px;
+    position: relative;
+}
+.education__entry::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    background-color: #e67e22;
+    border-radius: 50%;
+}
+.education__entry::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 20px;
+    bottom: -10px;
+    width: 2px;
+    background-color: #e0e0e0;
+}
+.education__degree {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+}
+.education__meta {
+    font-size: 0.9em;
+    color: #777;
+    margin: 0;
+}
+
+/* --- SKILLS SECTION --- */
+.skills__list {
+    list-style: none;
+    padding: 0;
+}
+.skills__item {
+    margin-bottom: 15px;
+}
+.skills__bar {
+    width: 100%;
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+.skills__progress {
+    height: 100%;
+    background-color: #555;
+    border-radius: 5px;
+}
+
+/* --- WORK EXPERIENCE SECTION --- */
+.job {
+    margin-bottom: 25px;
+}
+.job__category {
+    color: #555;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+}
+.job__title {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 5px 0;
+}
+.job__responsibilities {
+    padding-left: 20px;
+    margin-top: 10px;
+}
