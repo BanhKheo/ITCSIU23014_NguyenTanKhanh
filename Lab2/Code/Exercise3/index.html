@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correct Flexbox Layout</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column; /* Stacks children vertically: header, content, footer */
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 3px solid orange;
+            padding: 10px;
+        }
+
+        .header, .footer {
+            background-color: #f1f1f1;
+            color: #000;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            font-size: 30px;
+            box-sizing: border-box; /* Ensures padding is included in the element's total width/height */
+            border: 1px solid #ccc;
+        }
+
+        .content-wrapper {
+            display: flex; /* Arranges children horizontally: sidebar, main, sidebar */
+            flex-direction: row;
+            width: 100%;
+        }
+
+        .content-wrapper div {
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            border: 1px solid #ccc;
+        }
+       
+        .sidebar-a {
+            flex-grow: 1;
+            background-color: #e9e9e9;
+        }
+        .main-content {
+            flex-grow: 3;
+            background-color: #f9f9f9;
+        }
+        .sidebar-b {
+            flex-grow: 1;
+            background-color: #e9e9e9;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">Header</div>
+        
+        <!-- This container now holds the side-by-side elements -->
+        <div class="content-wrapper">
+            <div class="sidebar-a">Sidebar A</div>
+            <div class="main-content">Main content</div>
+            <div class="sidebar-b">Sidebar B</div>
+        </div>
+        
+        <div class="footer">Footer</div>
+    </div>
+</body>
+</html>
+

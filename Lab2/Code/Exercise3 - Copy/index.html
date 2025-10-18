@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San Joaquin Valley Town Hall</title>
+    <style>
+        /* Basic styles for the whole page */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 20px;
+        }
+
+        /* The main container with the border */
+        .page-container {
+            max-width: 900px;
+            margin: auto; /* Centers the container */
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* Header section with logo and title */
+        header {
+            display: flex; /* Aligns logo and text side-by-side */
+            align-items: center; /* Vertically centers items */
+            padding: 20px;
+            border-bottom: 2px solid #f0ad4e;
+        }
+
+        header img {
+            width: 80px;
+            margin-right: 20px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 16px;
+            font-style: italic;
+            margin: 0;
+        }
+
+        /* This is the main content area, set up as a flex container */
+        .main-content-area {
+            display: flex;
+            padding: 20px;
+        }
+
+        /* Left column for the main text */
+        .main-column {
+            flex: 2; /* Takes up 2/3 of the space */
+            padding-right: 20px;
+        }
+
+        /* Right column for the sidebar */
+        .sidebar-column {
+            flex: 1; /* Takes up 1/3 of the space */
+            background-color: #fffbe6; /* Light yellow background */
+            padding: 20px;
+            border: 1px solid #ffeeba;
+        }
+        
+        .sidebar-column h3 {
+            color: #d9534f; /* Reddish color for lecture notes headings */
+        }
+        
+        ul {
+            list-style-type: square;
+        }
+
+        /* Footer section */
+        footer {
+            text-align: center;
+            padding: 15px;
+            border-top: 2px solid #f0ad4e;
+            font-size: 14px;
+            color: #666;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+        <header>
+            <img src="https://res.cloudinary.com/dj2yqelqs/image/upload/v1760778402/Screenshot_2025-10-18_160628_mjtrwo.png" alt="Town Hall Logo">
+            <div>
+                <h1>San Joaquin Valley Town Hall</h1>
+                <p>Bringing cutting-edge speakers to the valley</p>
+            </div>
+        </header>
+
+        <main class="main-content-area">
+            
+            <section class="main-column">
+                <h2>This season's guest speakers</h2>
+                <ul>
+                    <li>October: <a href="#">David Brancaccio</a></li>
+                    <li>November: <a href="#">Andrew Ross Sorkin</a></li>
+                    <li>January: <a href="#">Amy Chua</a></li>
+                    <li>February: <a href="#">Scott Sampson</a></li>
+                    <li>March: <a href="#">Carlos Eire</a></li>
+                    <li>April: <a href="#">Ronan Tynan</a></li>
+                </ul>
+
+                <h2>Looking for a unique gift?</h2>
+                <p>
+                    Town Hall has the answer. For only $100, you can get a book of tickets for all of the remaining speakers. And the bargain includes a second book of tickets for a companion.
+                </p>
+                <p>
+                    Or, for $50, you can give yourself the gift of our speakers, and still get an extra ticket for a companion, but for just one of the events.
+                </p>
+                <p>
+                    See you at the next show?
+                </p>
+                <p>
+                    <b>Contact us by phone</b> at (559) 555-1212 for ticket information.
+                </p>
+            </section>
+
+            <aside class="sidebar-column">
+                <h3>Lecture notes</h3>
+                <h4>Event change for November</h4>
+                <p>
+                    SJV Town Hall is pleased to announce the addition of award-winning author Andrew Ross Sorkin. The appearance of previously scheduled speaker, Greg Mortenson, has been postponed.
+                </p>
+                <h4>Lecture day, time, and location</h4>
+                <p>
+                    All one-hour lectures are on the second Wednesday of the month beginning at 10:30 a.m. at William Saroyan Theatre, 700 M Street, Fresno, CA.
+                </p>
+            </aside>
+
+        </main>
+        
+        <footer>
+            <p>&copy; Copyright 2022 San Joaquin Valley Town Hall.</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
+
