@@ -17,7 +17,7 @@
 
 
 ### Border the input
-![alt text](/Task1.1/img/borderColorOnError.png)
+![alt text](Task1.1/img/borderColorOnError.png)
 - This is using in the validate Form method if user input wrong add the class 'invalid' and remove 'valid' to the input tag, in constrast add the class'valid' and remove 'invalid'
 
 # Task 1.2: Interactive Form Validator (15 Points)
