@@ -6,7 +6,7 @@
 
 ## Results
 
-![alt text](Task1.1/img/resultExer1.png)
+![alt text](Task1.2/img/resultExer1.png)
 ## 🧠 JavaScript Logic
 
 ### ShowError
@@ -24,7 +24,7 @@
 
 ## Results
 
-![alt text](Task1.2/img/resultExer2.png)
+![alt text](Task1.1/img/resultExer2.png)
 ## 🧠 JavaScript Logic
 
 ### Render Product 
