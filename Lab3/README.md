@@ -6,7 +6,7 @@
 
 ## Results
 
-![alt text](Task1.2/img/resultExer1.png.png)
+![alt text](Lab3/Task1.2/img/resultExer1.png.png)
 ## 🧠 JavaScript Logic
 
 ### ShowError
