@@ -6,6 +6,15 @@
     String email = request.getParameter("email");
     String major = request.getParameter("major");
 
+
+    if (email != null && !email.isEmpty()) {
+            if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+                // Invalid email format
+                response.sendRedirect("add_student.jsp?error=Invalid email format");
+                return;
+            }
+    }
+
     if (studentCode == null || studentCode.trim().isEmpty() ||
         fullName == null || fullName.trim().isEmpty()) {
         response.sendRedirect("add_student.jsp?error=Required fields are missing");
