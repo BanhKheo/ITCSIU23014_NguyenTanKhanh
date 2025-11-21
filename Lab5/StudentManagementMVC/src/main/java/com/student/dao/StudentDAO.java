@@ -1,9 +1,15 @@
 package com.student.dao;
 
-import com.student.model.Student;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.student.model.Student;
 
 public class StudentDAO {
 
@@ -77,6 +83,40 @@ public class StudentDAO {
         return null;
     }
 
+    public List<Student> searchStudents( String keyword){
+        List<Student> students = new ArrayList<>(); // 1. Initialize the list
+        String sql = "SELECT * FROM students WHERE student_code LIKE ? OR full_name LIKE ? OR email LIKE ? OR major LIKE ?"; 
+
+        String searchPattern = "%" + keyword + "%";
+
+        try( Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, searchPattern);
+            pstmt.setString(2, searchPattern);
+            pstmt.setString(3, searchPattern);
+            pstmt.setString(4, searchPattern);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Student student = new Student();
+                student.setId(rs.getInt("id"));
+                student.setStudentCode(rs.getString("student_code"));
+                student.setFullName(rs.getString("full_name"));
+                student.setEmail(rs.getString("email"));
+                student.setMajor(rs.getString("major"));
+                student.setCreatedAt(rs.getTimestamp("created_at"));
+                students.add(student);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return students;
+    }
+
+
     // Add new student
     public boolean addStudent(Student student) {
         String sql = "INSERT INTO students (student_code, full_name, email, major) VALUES (?, ?, ?, ?)";
@@ -135,5 +175,86 @@ public class StudentDAO {
             e.printStackTrace();
             return false;
         }
+    }
+
+
+
+    // 1. Helper to validate Sort Column (Security Whitelist)
+    private String validateSortBy(String sortBy) {
+        if (sortBy == null) return "id"; // Default
+        switch (sortBy) {
+            case "student_code": return "student_code";
+            case "full_name": return "full_name";
+            case "email": return "email";
+            case "major": return "major";
+            default: return "id"; // Fallback for invalid input
+        }
+    }
+
+    // 2. Helper to validate Order
+    private String validateOrder(String order) {
+        if (order != null && order.equalsIgnoreCase("desc")) {
+            return "DESC";
+        }
+        return "ASC";
+    }
+
+    // UPDATED: Handles Keyword + Major + Sort + Order all at once
+    public List<Student> getStudentsUniversal(String keyword, String major, String sortBy, String order) {
+        List<Student> students = new ArrayList<>();
+
+        // 1. Security Validation
+        String validSort = validateSortBy(sortBy); // Reuse your helper
+        String validOrder = validateOrder(order);  // Reuse your helper
+
+        // 2. Build Dynamic SQL
+        StringBuilder sql = new StringBuilder("SELECT * FROM students WHERE 1=1");
+        List<Object> params = new ArrayList<>(); // To store parameters safely
+
+        // -> Add Search Logic
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            sql.append(" AND (student_code LIKE ? OR full_name LIKE ? OR email LIKE ?)");
+            String pattern = "%" + keyword.trim() + "%";
+            params.add(pattern);
+            params.add(pattern);
+            params.add(pattern);
+        }
+
+        // -> Add Filter Logic
+        if (major != null && !major.trim().isEmpty()) {
+            sql.append(" AND major = ?");
+            params.add(major);
+        }
+
+        // -> Add Sort Logic
+        sql.append(" ORDER BY ").append(validSort).append(" ").append(validOrder);
+
+        // 3. Execute Query
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
+
+            // Map the parameters to the ? placeholders
+            for (int i = 0; i < params.size(); i++) {
+                pstmt.setObject(i + 1, params.get(i));
+            }
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Student student = new Student();
+                student.setId(rs.getInt("id"));
+                student.setStudentCode(rs.getString("student_code"));
+                student.setFullName(rs.getString("full_name"));
+                student.setEmail(rs.getString("email"));
+                student.setMajor(rs.getString("major"));
+                student.setCreatedAt(rs.getTimestamp("created_at"));
+                students.add(student);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return students;
     }
 }
