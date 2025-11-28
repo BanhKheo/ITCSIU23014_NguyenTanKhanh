@@ -99,6 +99,26 @@ public class UserDAO {
         }
         return null;
     }
+    // Add to UserDAO.java
+
+    // SQL Constant
+    private static final String SQL_UPDATE_PASSWORD = "UPDATE users SET password = ? WHERE id = ?";
+
+    public boolean updatePassword(int userId, String newHashedPassword) {
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(SQL_UPDATE_PASSWORD)) {
+
+            pstmt.setString(1, newHashedPassword);
+            pstmt.setInt(2, userId);
+
+            int rows = pstmt.executeUpdate();
+            return rows > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     // Helper method to map ResultSet to User object
     private User mapResultSetToUser(ResultSet rs) throws SQLException {

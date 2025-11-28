@@ -127,6 +127,8 @@
             </div>
             <a href="logout" class="logout-btn">Logout ➔</a>
         </div>
+
+
     </nav>
 
     <div class="container">
@@ -183,7 +185,12 @@
                     <span class="action-icon">👤</span>
                     <span class="action-title">My Profile</span>
                 </a>
+                <a href="change-password" class="action-btn" ">
+                    <span class="action-icon">🔑</span>
+                    <span class="action-title">Change Password</span>
+                </a>
             </div>
+
         </div>
     </div>
 

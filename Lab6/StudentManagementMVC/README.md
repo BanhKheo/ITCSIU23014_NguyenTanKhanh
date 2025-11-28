@@ -92,4 +92,143 @@ request.getRequestDispatcher("/views/dashboard.jsp").forward(request, response);
 ### Login Successfull
 ![alt text](img/loginSuccessfull.png)
 
+# PART B: HOMEWORK EXERCISES (40 points)
+
+## EXERCISE 5: AUTHENTICATION FILTER (12 points)
+
+### Code Explanation
+
+```
+public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+        throws IOException, ServletException {
+
+    // 1. Cast to HTTP objects to access Session and URL data
+    HttpServletRequest httpRequest = (HttpServletRequest) request;
+    HttpServletResponse httpResponse = (HttpServletResponse) response;
+
+    // 2. Extract the specific path requested (e.g., "/dashboard" or "/login")
+    // RequestURI = "/StudentManagement/dashboard"
+    // ContextPath = "/StudentManagement"
+    // Path = "/dashboard"
+    String requestURI = httpRequest.getRequestURI();
+    String contextPath = httpRequest.getContextPath();
+    String path = requestURI.substring(contextPath.length());
+
+    // 3. Check if this is a Public URL
+    if (isPublicUrl(path)) {
+        // It's public, let them pass without checking session
+        chain.doFilter(request, response);
+        return;
+    }
+
+    // 4. Check if user is logged in
+    // getSession(false) means: Get current session, but DO NOT create a new one if none exists.
+    HttpSession session = httpRequest.getSession(false);
+    boolean isLoggedIn = (session != null && session.getAttribute("user") != null);
+
+    if (isLoggedIn) {
+        // 5. User is valid, allow request to proceed to Controller/JSP
+
+        // (Optional) Prevent browser back-button caching of secured pages
+        httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+        httpResponse.setHeader("Pragma", "no-cache"); // HTTP 1.0
+        httpResponse.setDateHeader("Expires", 0); // Proxies
+
+        chain.doFilter(request, response);
+    } else {
+        // 6. User is NOT logged in, kick them to the login page
+        // We use sendRedirect because we want the URL to change
+        System.out.println("⛔ Access Denied for path: " + path);
+        httpResponse.sendRedirect(contextPath + "/login?error=Please login first");
+    }
+}
+```
+- Check if the endpoints is in the public user dont need to check session
+- Else check the object session has already generated or not if not require login else redirection to login page with error msg
+
+
+### Access endpoints student before and after login
+
+#### Before
+![alt text](src/main/webapp/images/terminalDeniedForPath.png)
+- Try accessing /student without login → Should redirect to login
+- And terminal present denies for the path only user can access
+
+#### After
+![alt text](src/main/webapp/images/retrieveLoginAgain.png)
+
+
+### Access static files (CSS, images) → Should work without login
+#### The folder hold the img that public user can access
+![alt text](src/main/webapp/images/imgLink.png)
+#### Access public img
+![alt text](src/main/webapp/images/publicAccessImg.png)
+
+## EXERCISE 6: ADMIN AUTHORIZATION FILTER (10 points)
+### Code Explain
+```
+if (isAdminAction(action)) {
+
+    // 3. Get session and user
+    HttpSession session = httpRequest.getSession(false);
+    User user = (session != null) ? (User) session.getAttribute("user") : null;
+
+    // 4. Check if user exists AND is an Admin
+    // Note: Make sure your User model has .isAdmin() or check .getRole().equals("admin")
+    if (user != null && "admin".equalsIgnoreCase(user.getRole())) {
+        // ✅ ACCESS GRANTED
+        chain.doFilter(request, response);
+    } else {
+        // ⛔ ACCESS DENIED
+        System.out.println("⛔ Non-admin tried to access: " + action);
+        // Redirect back to the list with an error message
+        httpResponse.sendRedirect(httpRequest.getContextPath() + "/student?action=list&error=Access Denied: Admin privileges required.");
+    }
+} else {
+    // 5. It is a public action (list, search, filter, sort)
+    // Allow everyone (even normal users) to pass
+    chain.doFilter(request, response);
+}
+```
+- Check all the endpoints is that action belong to admin or not
+- Else not in admin action it is public action allow normal user
+- Then go through the if statement if user role is admin can access that action
+- chain.doFilter(request, response) : "I have finished my work (checking logic, logging, security). This request is safe. Please pass it to the next person in line."
+
+### Login as admin → Try edit/delete → Should work
+
+![alt text](src/main/webapp/images/editAsAdmin.png)
+
+### Logout. Login as regular user → Try edit/delete → Should be blocked
+
+![alt text](src/main/webapp/images/denyAcceptAdminEndPoint.png)
+
+![alt text](src/main/webapp/images/terminalDenyAccess.png)
+
+### Try direct URL: /student?action=delete&id=1 → Should be blocked
+
+![alt text](src/main/webapp/images/redirectionImgLink.png)
+
+## EXERCISE 7: ROLE-BASED UI (10 points)
+
+### User UI
+
+![alt text](src/main/webapp/images/UIUserRole.png)
+
+### Admin UI
+
+![alt text](src/main/webapp/images/UIwithAdminRole.png)
+
+## EXERCISE 8: CHANGE PASSWORD (8 points) - Optional
+
+### Change Password UI
+
+![alt text](src/main/webapp/images/changePassWordAtDashboard.png)
+
+![alt text](src/main/webapp/images/changePasswordUI.png)
+
+### Change Password Successfully
+
+![alt text](src/main/webapp/images/changePassword.png)
+
 
