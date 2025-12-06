@@ -113,14 +113,22 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public String searchProducts(@RequestParam(defaultValue = "") String keyword, Model model) {
-        List<Product> products = productService.searchProducts(keyword);
-
-        model.addAttribute("products", products);
-        model.addAttribute("keyword", keyword);
-
+    public String searchProducts(
+        @RequestParam(required = false) String name,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "3") int size,
+        Model model) {
+        
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Product> productPage = productService.searchProducts(name, pageable);
+        
+        model.addAttribute("products", productPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", productPage.getTotalPages());
+        
         return "product-list";
     }
+
 
     @GetMapping("/category")
     public String filterByCategory(
@@ -160,6 +168,8 @@ public class ProductController {
         return "product-list";
     }
 
+
+    @GetMapping("/advanced-search")
     public String advancedSearch(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String category,
@@ -179,22 +189,5 @@ public class ProductController {
         return "product-list";
     }
 
-    @GetMapping("/page")
-    public String paginatedSearch(
-            @RequestParam(defaultValue = "") String keyword,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size,
-            Model model) {
-
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Product> productPage = productService.searchProductsPaginated(keyword, pageable);
-
-        model.addAttribute("products", productPage.getContent());
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", productPage.getTotalPages());
-        model.addAttribute("totalItems", productPage.getTotalElements());
-
-        return "product-list";
-    }
+    
 }

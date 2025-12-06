@@ -111,7 +111,7 @@ Add search by multiple criteria:
 - Category (exact match)
 - Price range (min-max)
 
-**Add to ProductRepository:**
+**Add Advance Search ProductRepository:**
 ```java
 @Query("SELECT p FROM Product p WHERE " +
        "(:name IS NULL OR p.name LIKE %:name%) AND " +
@@ -130,19 +130,28 @@ List<Product> searchProducts(@Param("name") String name,
 ```java
 @GetMapping("/advanced-search")
 public String advancedSearch(
-    @RequestParam(required = false) String name,
-    @RequestParam(required = false) String category,
-    @RequestParam(required = false) BigDecimal minPrice,
-    @RequestParam(required = false) BigDecimal maxPrice,
-    Model model) {
-    // Implementation
+        @RequestParam(required = false) String name,
+        @RequestParam(required = false) String category,
+        @RequestParam(required = false) BigDecimal minPrice,
+        @RequestParam(required = false) BigDecimal maxPrice,
+        Model model) {
 
-    - Line: 120 - 128
+    List<Product> products = productService.advancedSearch(name, category, minPrice, maxPrice);
+
+    model.addAttribute("products", products);
+    model.addAttribute("categories", productService.getAllCategories());
+    model.addAttribute("searchName", name);
+    model.addAttribute("selectedCategory", category);
+    model.addAttribute("minPrice", minPrice);
+    model.addAttribute("maxPrice", maxPrice);
+
+    return "product-list";
 }
 ```
-
+- model.addAtribute to remain the search value when reload product-list
+- Server load product-list.html then send to the client
 **Add advanced search form to product-list.html.**
-![alt text](src/main/resources/static/images/UpdateProduct_List_View.png)
+![alt text](src/main/resources/static/images/advanceSearchResults.png)
 
 ---
 
@@ -156,6 +165,16 @@ Add category filter dropdown that shows all unique categories.
 List<String> findAllCategories();
 ```
 
+
+```java
+@GetMapping
+    public String listProducts(){
+        // Get categories for the filter dropdown
+        List<String> categories = productService.getAllCategories();
+    }
+
+```
+- Modify listProducts when first call Get categories for the filter dropdown 
 **Add filter dropdown to view:**
 ```html
 <select name="category" onchange="this.form.submit()">
@@ -167,6 +186,8 @@ List<String> findAllCategories();
     </option>
 </select>
 ```
+- Then can get the category
+![alt text](src/main/resources/static/images/FilterByCategory.png)
 
 ---
 
@@ -185,7 +206,7 @@ Page<Product> findByNameContaining(String keyword, Pageable pageable);
 public String searchProducts(
     @RequestParam("keyword") String keyword,
     @RequestParam(defaultValue = "0") int page,
-    @RequestParam(defaultValue = "10") int size,
+    @RequestParam(defaultValue = "3") int size,
     Model model) {
     
     Pageable pageable = PageRequest.of(page, size);
@@ -198,6 +219,49 @@ public String searchProducts(
     return "product-list";
 }
 ```
+
+
+
+```html
+<div th:if="${totalPages > 1}" class="d-flex justify-content-center mt-4" style="margin-top: 20px;">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            
+            <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                <a class="page-link" 
+                    th:href="@{/products/search(
+                        page=${currentPage - 1}, 
+                        size=3, 
+                        sortBy=${sortBy}, sortDir=${sortDir},
+                        name=${searchName}, category=${searchCategory}, minPrice=${searchMinPrice}, maxPrice=${searchMaxPrice})}">
+                    &laquo; Previous
+                </a>
+            </li>
+
+            <li class="page-item disabled">
+                <span class="page-link">
+                    Page [[${currentPage + 1}]] of [[${totalPages}]]
+                </span>
+            </li>
+
+            <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                <a class="page-link" 
+                    th:href="@{/products/search(
+                        page=${currentPage + 1}, 
+                        size=3, 
+                        sortBy=${sortBy}, sortDir=${sortDir},
+                        name=${searchName}, category=${searchCategory}, minPrice=${searchMinPrice}, maxPrice=${searchMaxPrice})}">
+                    Next &raquo;
+                </a>
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+</div>
+```
+
+![alt text](src/main/resources/static/images/pagination.png)
 
 ---
 ## EXERCISE 6: VALIDATION (10 points)

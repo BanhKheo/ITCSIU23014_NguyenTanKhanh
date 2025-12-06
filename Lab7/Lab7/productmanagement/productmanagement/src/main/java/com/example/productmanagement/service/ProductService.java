@@ -29,7 +29,7 @@ public interface ProductService {
     
     List<String> getAllCategories();
 
-    Page<Product> searchProductsPaginated(String keyword, Pageable pageable);
+    Page<Product> searchProducts(String keyword, Pageable pageable);
 
     List<Product> getProducts(String category, String sortBy, String sortDir);
 }
