@@ -371,9 +371,9 @@ public class WebConfig implements WebMvcConfigurer {
 ```
 
 ##### Step interator request postman
-![alt text](/customer-api/src/main/resources/static/images/setRunReq110.png)
+![alt text](src/main/resources/static/images/setRunReq110.png)
 ##### Result
-![alt text](/customer-api/src/main/resources/static/images/resultsBonus3.png)
+![alt text](src/main/resources/static/images/resultsBonus3.png)
 
 - We see status 429 in request 119
 - Why our bugget is 100 but till 119 the error occur. Because the bugget is refilled 100 per minutes (1.6 token / seconds) so after 12s the token refill is 19.2 that is the reason
