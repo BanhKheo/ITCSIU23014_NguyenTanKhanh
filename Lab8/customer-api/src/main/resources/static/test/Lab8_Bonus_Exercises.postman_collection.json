@@ -1,0 +1,113 @@
+{
+	"info": {
+		"_postman_id": "bonus-1234-5678-9abc-def012345678",
+		"name": "Lab 8 Bonus Exercises",
+		"description": "Collection for testing API Versioning, HATEOAS, and Rate Limiting.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Bonus 1: API Versioning",
+			"item": [
+				{
+					"name": "Get Customers V1 (Standard)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/customers",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers"
+							]
+						},
+						"description": "Calls the V1 controller. Names should appear normally."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customers V2 (Enhanced)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v2/customers",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"customers"
+							]
+						},
+						"description": "Calls the V2 controller. Names should be UPPERCASE (prefixed with V2) to demonstrate the version difference."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bonus 2: HATEOAS",
+			"item": [
+				{
+					"name": "Get Customer By ID (With Links)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/customers/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"1"
+							]
+						},
+						"description": "Check the response body. It should contain a '_links' section with 'self' and 'all-customers' URLs."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bonus 3: Rate Limiting",
+			"item": [
+				{
+					"name": "Rate Limit Stress Test",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v1/customers",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers"
+							]
+						},
+						"description": "INSTRUCTIONS: Rapidly click 'Send' on this request (or use Postman Runner). After 100 requests within 1 minute, you should receive a 429 Too Many Requests status."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}

@@ -1,0 +1,396 @@
+{
+	"info": {
+		"_postman_id": "b5a76543-1234-5678-9abc-def012345678",
+		"name": "Lab 8 Customer API",
+		"description": "Collection for testing Spring Boot Customer API exercises (Part A & B).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Basic CRUD (Part A)",
+			"item": [
+				{
+					"name": "Create Customer (Task 4.1)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customerCode\": \"C004\",\n    \"fullName\": \"Alice Wonderland\",\n    \"email\": \"alice.w@example.com\",\n    \"phone\": \"+1-555-9988\",\n    \"address\": \"123 Rabbit Hole, Oxford\",\n    \"status\": \"ACTIVE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						},
+						"description": "Creates a new customer. Returns 201 Created."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Customers (Task 4.1)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						},
+						"description": "Retrieves list of all customers."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer By ID (Task 4.1)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"1"
+							]
+						},
+						"description": "Retrieves a specific customer by ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Customer (PUT) (Task 4.1)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customerCode\": \"C001\",\n    \"fullName\": \"John Doe Updated\",\n    \"email\": \"john.doe.updated@example.com\",\n    \"phone\": \"+1-555-0000\",\n    \"address\": \"New Address, NY\",\n    \"status\": \"INACTIVE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"1"
+							]
+						},
+						"description": "Full update of a customer resource."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Customer (Task 4.1)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"1"
+							]
+						},
+						"description": "Deletes a customer by ID."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. Search & Filter (Task 5)",
+			"item": [
+				{
+					"name": "Search by Keyword (Task 5.1)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/search?keyword=John",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"search"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "John"
+								}
+							]
+						},
+						"description": "Searches name, email, or code for the keyword."
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by Status (Task 5.2)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/status/ACTIVE",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"status",
+								"ACTIVE"
+							]
+						},
+						"description": "Filters customers by ACTIVE or INACTIVE status."
+					},
+					"response": []
+				},
+				{
+					"name": "Advanced Search (Task 5.3)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/advanced-search?name=Jane&status=ACTIVE",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"advanced-search"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Jane"
+								},
+								{
+									"key": "email",
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "ACTIVE"
+								}
+							]
+						},
+						"description": "Search with multiple optional parameters."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3. Pagination & Sorting (Task 6)",
+			"item": [
+				{
+					"name": "Paginated List (Task 6.1)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}?page=0&size=2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "2"
+								}
+							]
+						},
+						"description": "Get customers page 0 with size 2."
+					},
+					"response": []
+				},
+				{
+					"name": "Sorted List (Task 6.2)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}?sortBy=fullName&sortDir=desc",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"query": [
+								{
+									"key": "sortBy",
+									"value": "fullName"
+								},
+								{
+									"key": "sortDir",
+									"value": "desc"
+								}
+							]
+						},
+						"description": "Get customers sorted by name descending."
+					},
+					"response": []
+				},
+				{
+					"name": "Pagination + Sorting (Task 6.3)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}?page=0&size=5&sortBy=createdAt&sortDir=desc",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								},
+								{
+									"key": "sortBy",
+									"value": "createdAt"
+								},
+								{
+									"key": "sortDir",
+									"value": "desc"
+								}
+							]
+						},
+						"description": "Combined pagination and sorting."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4. Partial Update (Task 7)",
+			"item": [
+				{
+					"name": "Patch Update (Task 7.2)",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"address\": \"Partially Updated Address\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"2"
+							]
+						},
+						"description": "Updates only the address field of customer ID 2."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "5. Error Handling (Task 4.2 / 8.3)",
+			"item": [
+				{
+					"name": "Error: 400 Bad Request (Validation)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customerCode\": \"BadCode\",\n    \"fullName\": \"\",\n    \"email\": \"invalid-email\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						},
+						"description": "Tests validation annotations."
+					},
+					"response": []
+				},
+				{
+					"name": "Error: 404 Not Found",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/9999",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"9999"
+							]
+						},
+						"description": "Tests ResourceNotFoundException."
+					},
+					"response": []
+				},
+				{
+					"name": "Error: 409 Conflict (Duplicate)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customerCode\": \"C002\",\n    \"fullName\": \"Duplicate Tester\",\n    \"email\": \"jane.smith@example.com\",\n    \"phone\": \"+1-555-9999\",\n    \"address\": \"Test Address\",\n    \"status\": \"ACTIVE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}",
+							"host": [
+								"{{baseUrl}}"
+							]
+						},
+						"description": "Tests DuplicateResourceException (uses existing data from SQL setup)."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080/api/customers",
+			"type": "string"
+		}
+	]
+}
